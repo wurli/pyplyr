@@ -1,0 +1,10 @@
+[project]
+name = "pyplyr"
+version = "0.0.1"
+dependencies = [
+    "numpy"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
