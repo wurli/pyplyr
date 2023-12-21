@@ -5,6 +5,7 @@ def __repr__(self):
     body    = "\n".join([" ".join(row) for row in zip(rownums, *pillars)])
     return f"{header}\n{body}"
 
+
 def _as_pillar(colname, colval, show_type=True):
     coltype = f"<{colval.dtype.name}>"
     pillar = [colname, coltype if show_type else ''] + list(colval.astype(str))
