@@ -1,51 +1,43 @@
 import numpy as np
-    
+from ..DataFrameCols import DataFrameCols
 
-class DataFrameBase():
-    def __init__(self, **args):
-        arrays = np.broadcast_arrays(*list(args.values()))
-        data = {col: val for col, val in zip(args.keys(), arrays)}
-        self.data = data
-
-    from .__repr__ import __repr__
+class DataFrameBase(DataFrameCols):
+    def __init__(self, **kwargs):
+        arrays = np.broadcast_arrays(*list(kwargs.values()))
+        self = super().__init__(**{
+            key: arr for key, arr in zip(kwargs.keys(), arrays)
+        })
     
+    from .__repr__    import __repr__
+    from .__getitem__ import __getitem__, _subset_rows
+
 
     # TODO: implement key: list
     def __setitem__(self, key, value):
-        key = self._index_to_col(key)
-        self.data[key] = self._as_col(value)
+        key = self.as_colname(key)
+        old_cols = self.colnames()
+        col_is_new = key not in old_cols
+        DataFrameCols.__setitem__(self, key, self._make_col(value))
 
-
-    def __getitem__(self, i):
-        if type(i) == list:
-            colnames = [self._index_to_col(ii) for ii in i]
-            cols = {col: self.data[col] for col in colnames}
-            return DataFrameBase(**cols)
-
-        col = self._index_to_col(i)
-        return self.data[col].copy()
+        if col_is_new:
+            self = self.reorder(key, after=-1)
+        else:
+            self = self.reorder(old_cols)
     
 
-    def _index_to_col(self, i):
-        if type(i) == int:
-            return list(self.data.keys())[i]
-        if type(i) == str:
-            return i
-        raise KeyError(f"Unsupported index type {type(i)}: check {i}")
+    def _check_exists(self, *args):
+        non_existant = set(args) - set(self.colnames())
+        if len(non_existant) > 0:
+            non_existant = ", ".join(non_existant)
+            raise KeyError(f"Non-existant column(s): check {non_existant}")
     
 
-    def _as_col(self, x):
+    def _make_col(self, x):
         _, x = np.broadcast_arrays(self[0], x)
         return x
 
 
     def nrow(self):
-        return len(self.data)
-    
+        return len(self[0])
 
-    def ncol(self):
-        return len(self.data[self.colnames()[0]])
     
-
-    def colnames(self):
-        return list(self.data.keys())
