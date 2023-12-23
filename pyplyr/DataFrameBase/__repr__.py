@@ -1,7 +1,7 @@
 import numpy as np
 
 def __repr__(self):
-    header  = f"A DataFrame: {self.nrow()} x {self.ncol()}"
+    header  = f"# A DataFrame: {self.nrow()} x {self.ncol()}"
     rownums = _as_pillar('', np.array(range(self.nrow() + 1)), show_type=False)
     pillars = [_as_pillar(name, val) for name, val in self.items()]
     body    = "\n".join([" ".join(row) for row in zip(rownums, *pillars)])
