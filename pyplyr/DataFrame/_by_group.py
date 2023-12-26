@@ -2,16 +2,18 @@ import numpy as np
 from collections import OrderedDict
 from .._utils import _as_id
 
+# size == "maintain" => size stays same
+# size == "collapse" => groups are collapsed to single row
+# size == "any"      => groups may be resized arbitrarily
 def _by_group(self, by, fn):
     
     groups, proxy_orderings = self._split_by(by)
     groups = [fn(g) for g in groups]
     
     def new_group_order(ordering, group):
-        if len(ordering) == group.nrow():
+        if group.nrow() == len(ordering):
             return ordering
-        else:
-            return np.broadcast_to(ordering.min(), group.nrow())
+        return np.broadcast_to(ordering.min(), group.nrow())
 
     new_orderings = np.argsort(np.concatenate([
         new_group_order(ordering, group)

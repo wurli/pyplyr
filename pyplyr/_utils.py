@@ -22,16 +22,33 @@ def _reorder(l, items, after = None):
     return start + middle + end
 
 
-def _make_col(g, x):
+def _make_col(dfs, x):
     if not callable(x):
         return x
 
     input_cols = list(x.__code__.co_varnames)
-    existing_cols = g.colnames()
+    existing_cols = {c for df in dfs for c in df.colnames()}
 
     bad_args = [col for col in input_cols if col not in existing_cols]
     if len(bad_args) > 0:
         bad_args = ", ".join(bad_args)
         raise ValueError(f"Bad input: non-existent column(s) `{bad_args}`")
     
-    return x(**g[input_cols])
+    def get_col(c):
+        for df in dfs:
+            if c in df.colnames():
+                return df[c]
+    
+    return x(**{c: get_col(c) for c in input_cols})
+
+
+def _to_vector(x):
+    """Convert a scalar to a vector, or leave a vector unchanged."""
+    scalars = [str, int, float, bool, type(None)]
+    vectors = [list, np.ndarray]
+    if any([isinstance(x, t) for t in scalars]):
+        return [x]
+    if any([isinstance(x, t) for t in vectors]):
+        return x
+    raise TypeError(f'Cannot convert {type(x)} to vector')
+    

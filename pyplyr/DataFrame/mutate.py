@@ -7,5 +7,5 @@ def mutate(self, **kwargs):
 
 def _mutate_group(g, **kwargs):
     for colname, x in kwargs.items():
-        g[colname] = _make_col(g, x)
+        g[colname] = _make_col([g], x)
     return g
