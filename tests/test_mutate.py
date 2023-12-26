@@ -39,4 +39,5 @@ def test_grouped_mutate_works():
     
     df1 = df.mutate(a=lambda y: y.max(), _by='x')
     npt.assert_array_equal(df1['a'], np.array([11.22, 11.22, 3.4]), "Grouped mutate should work with a function")
+    npt.assert_array_equal(df1['x'], np.array(['foo', 'foo', 'bar']), "Grouped mutate should not change other columns") 
     
