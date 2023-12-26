@@ -4,6 +4,7 @@ def _as_id(x: np.ndarray, axis=0):
     _, id = np.unique(x, return_inverse=True, axis=axis)
     return id
 
+
 def _reorder(l, items, after = None):
 
     after = -1 if after is None else after % len(l)
@@ -19,6 +20,7 @@ def _reorder(l, items, after = None):
         else:
             end.append(x)
     return start + middle + end
+
 
 def _make_col(g, x):
     if not callable(x):

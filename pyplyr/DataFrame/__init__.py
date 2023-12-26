@@ -7,7 +7,8 @@ class DataFrame(DataFrameBase):
 
     from .mutate import mutate
     from .filter import filter
-    
+    from .arrange import arrange
+     
     from ._by_group import _by_group, _make_splits, _split_by
 
 

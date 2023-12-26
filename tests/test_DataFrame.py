@@ -2,13 +2,6 @@ import pyplyr as pyp
 import numpy as np
 import numpy.testing as npt
 
-
-df = pyp.DataFrame(
-    x=['foo', 'foo', 'bar'],
-    y=[11.22, 2.3, 3.4],
-    z=[3, 4, 5]
-)
-
 def test_df_creation():
     df = pyp.DataFrame(
         x=['foo', 'foo', 'bar'],
