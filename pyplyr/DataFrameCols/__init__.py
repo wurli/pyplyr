@@ -11,9 +11,9 @@ class DataFrameCols(dict):
             return self
 
         pos = self.as_colname(pos)
-
+        
         if isinstance(pos, list):
-            return DataFrameCols(**{p: self[p] for p in pos})
+            return DataFrameCols(**{p: self[p] for p in pos if pos})
         
         return super().__getitem__(pos)
 
@@ -43,6 +43,7 @@ class DataFrameCols(dict):
         if isinstance(i, int):
             return self.colnames()[i]
         if isinstance(i, list):
+            i = [ii for ii in i if ii is not None]
             return [self.as_colname(ii) for ii in i]
         raise KeyError(f"Cannot get index of type {type(i)}")
     

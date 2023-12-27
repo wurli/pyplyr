@@ -38,6 +38,8 @@ class DataFrameBase(DataFrameCols):
 
 
     def nrow(self):
+        if self.ncol() == 0:
+            return 0
         return len(self[0])
 
     

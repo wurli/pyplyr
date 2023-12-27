@@ -8,6 +8,8 @@ def test_summarise_works():
         y=[11.22, 2.3, 3.4, 100], 
         z=[1, 1, 2, 3]
     )
+    
+    # df.summarise(a=lambda y: y.sum())
+    df.summarise(a=lambda y: y.sum(), _by='x')
 
-    df.summarise(a=lambda y: y.sum())
-
+   
