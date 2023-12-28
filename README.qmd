@@ -106,3 +106,7 @@ df3
 
 * [dplython](https://pythonhosted.org/dplython/) attempts to implement dplyr 
   syntax on top of a pandas backend.
+
+ * [datar](https://github.com/pwwang/datar) attempts to implement dplyr syntax
+  on top of multiple backends, and also provides some ggplot2-style plotting
+  functionality.
