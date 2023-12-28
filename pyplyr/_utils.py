@@ -27,7 +27,7 @@ def _make_col(dfs, x):
         return x
 
     input_cols = list(x.__code__.co_varnames)
-    existing_cols = {c for df in dfs for c in df.colnames()}
+    existing_cols = {c for df in dfs for c in df.keys()}
 
     bad_args = [col for col in input_cols if col not in existing_cols]
     if len(bad_args) > 0:
@@ -36,10 +36,11 @@ def _make_col(dfs, x):
     
     def get_col(c):
         for df in dfs:
-            if c in df.colnames():
+            if c in df.keys():
                 return df[c]
     
-    return x(**{c: get_col(c) for c in input_cols})
+    out = x(**{c: get_col(c) for c in input_cols})
+    return np.asarray(out).reshape(-1)
 
 
 def _to_vector(x):
@@ -52,3 +53,6 @@ def _to_vector(x):
         return x
     raise TypeError(f'Cannot convert {type(x)} to vector')
     
+    
+def _rm_none(l):
+    return [x for x in l if x is not None]

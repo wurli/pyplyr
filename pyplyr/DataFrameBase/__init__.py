@@ -1,5 +1,6 @@
 import numpy as np
 from ..DataFrameCols import DataFrameCols
+from .._utils import _rm_none
 
 class DataFrameBase(DataFrameCols):
     def __init__(self, **kwargs):
@@ -27,6 +28,7 @@ class DataFrameBase(DataFrameCols):
     
 
     def _check_exists(self, *args):
+        args = _rm_none(args)
         non_existant = set(args) - set(self.colnames())
         if len(non_existant) > 0:
             non_existant = ", ".join(non_existant)

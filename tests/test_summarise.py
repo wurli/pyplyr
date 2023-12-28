@@ -9,7 +9,7 @@ def test_summarise_works():
         z=[1, 1, 2, 3]
     )
     
-    # df.summarise(a=lambda y: y.sum())
+    df.summarise(a=lambda y: y.sum())
     df.summarise(a=lambda y: y.sum(), _by='x')
 
    

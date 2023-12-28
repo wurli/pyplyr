@@ -1,6 +1,6 @@
 import numpy as np
 from collections import OrderedDict
-from .._utils import _as_id
+from .._utils import _as_id, _rm_none
 
 # size == "maintain" => size stays same
 # size == "collapse" => groups are collapsed to single row
@@ -33,7 +33,7 @@ def _by_group(self, by, fn):
 
 
 def _split_by(self, cols=None):
-    cols = cols or []
+    cols = _rm_none(cols or [])
 
     if len(cols) == 0:
         return [self], [np.array(range(self.nrow()))]
