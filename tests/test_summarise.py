@@ -10,6 +10,9 @@ def test_ungrouped_summarise_works():
         z=[1, 2, 3, 4]
     )
     
+    df2 = df.summarise()
+    assert df2.colnames() == [], "summarise() should return an empty DataFrame"
+    
     df2 = df.summarise(a=lambda y: y.sum())
     assert df2.colnames() == ['a'], "summarise() should return a single-column DataFrame"
     assert df2[0, 'a'] == 22,       "summarise() should sum values correctly"
@@ -34,6 +37,9 @@ def test_grouped_summarise_works():
         y=[4, 5, 6, 7], 
         z=[1, 1, 3, 4]
     ) 
+    
+    df2 = df.summarise(_by='x')
+    assert df2.colnames() == ['x'], "summarise(_by='x') should return a single-column DataFrame"
     
     df2 = df.summarise(y=lambda y: y.sum(), _by='x')
     assert df2.colnames() == ['x', 'y'],                        "summarise() should return a two-column DataFrame"
