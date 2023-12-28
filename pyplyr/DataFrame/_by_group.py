@@ -1,6 +1,6 @@
 import numpy as np
 from collections import OrderedDict
-from .._utils import _as_id, _rm_none
+from .._utils import _as_id, _rm_none, _to_vector
 
 # size == "maintain" => size stays same
 # size == "collapse" => groups are collapsed to single row
@@ -32,13 +32,13 @@ def _by_group(self, by, fn):
     return out
 
 
-def _split_by(self, cols=None):
-    cols = _rm_none(cols or [])
+def _split_by(self, by=None):
+    by = _rm_none(_to_vector(by))
 
-    if len(cols) == 0:
+    if len(by) == 0:
         return [self], [np.array(range(self.nrow()))]
     
-    splits = self._make_splits(cols)
+    splits = self._make_splits(by)
     row_nums = np.array(range(self.nrow()))
     
     groups = [self[split, None] for split in splits]
@@ -47,13 +47,13 @@ def _split_by(self, cols=None):
     return groups, proxy_orderings
     
 
-def _make_splits(self, cols: list):
-    self._check_exists(*cols)
+def _make_splits(self, by: list):
+    self._check_exists(*by)
 
     col_ids = [
         _as_id(colval)
         for colname, colval in self.items()
-        if colname in cols
+        if colname in by
     ]
 
     group_id = _as_id(np.column_stack(col_ids))

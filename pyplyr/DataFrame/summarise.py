@@ -8,6 +8,7 @@ def summarise(self, **kwargs):
 def _summarise_group(g, fns, by):
     group_row = [] if len(by) == 0 else [g[[0], _to_vector(by)]]
     summarised = []
+    
     for colname, x in fns.items():
         new_col = _make_col(summarised + [g], x)
         
@@ -17,6 +18,6 @@ def _summarise_group(g, fns, by):
         summarised += [{colname: new_col}]
         
     out_cols = {c: v for df in group_row + summarised for c, v in df.items()}
-        
+    
     return g._new(**out_cols)
 

@@ -24,7 +24,7 @@ def _reorder(l, items, after = None):
 
 def _make_col(dfs, x):
     if not callable(x):
-        return x
+        return _to_vector(x)
 
     input_cols = list(x.__code__.co_varnames)
     existing_cols = {c for df in dfs for c in df.keys()}
@@ -40,18 +40,11 @@ def _make_col(dfs, x):
                 return df[c]
     
     out = x(**{c: get_col(c) for c in input_cols})
-    return np.asarray(out).reshape(-1)
+    return _to_vector(out)
 
 
 def _to_vector(x):
-    """Convert a scalar to a vector, or leave a vector unchanged."""
-    scalars = [str, int, float, bool, type(None)]
-    vectors = [list, np.ndarray]
-    if any([isinstance(x, t) for t in scalars]):
-        return [x]
-    if any([isinstance(x, t) for t in vectors]):
-        return x
-    raise TypeError(f'Cannot convert {type(x)} to vector')
+    return np.asarray(x).reshape(-1)
     
     
 def _rm_none(l):

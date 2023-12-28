@@ -27,7 +27,7 @@ def _subset_rows(self, i):
     if i is None:
         return DataFrameCols(**self)
     
-    if isinstance(i, list):
+    if isinstance(i, list) or isinstance(i, np.ndarray):
         i = [ii for ii in i if ii is not None]
      
     return DataFrameCols(**{col: self[col][i] for col in self.colnames()})
