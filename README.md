@@ -130,9 +130,15 @@ df3
 
 - [siuba](https://github.com/machow/siuba) is a very cool attempt at a
   dplyr implementation in python:
+
   - siuba implements ‘siu expressions’ - a sophisticated system for
     performating calculations using special syntax - and overloads `>>`
     as a pipe operator. In contrast to this, I’d like to build something
     which feels closer to idiomatic Python.
+
 - [dplython](https://pythonhosted.org/dplython/) attempts to implement
   dplyr syntax on top of a pandas backend.
+
+- [datar](https://github.com/pwwang/datar) attempts to implement dplyr
+  syntax on top of multiple backends, and also provides some
+  ggplot2-style plotting functionality.
