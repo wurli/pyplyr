@@ -3,7 +3,7 @@
 An experimental data wrangling toolkit for Python, built on Numpy and
 inspired by dplyr.
 
-\## Installation
+## Installation
 
 The development version of pyplyr can currently be installed from GitHub
 using pip:
