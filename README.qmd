@@ -7,7 +7,16 @@ engine: jupyter
 
 An experimental data wrangling toolkit for Python, built on Numpy and inspired by dplyr.
 
-## DataFrame creation:
+## Installation
+The development version of pyplyr can currently be installed from GitHub using pip:
+
+```bash
+python -m pip install git+https://github.com/wurli/pyplyr
+```
+
+## Usage:
+
+### DataFrame creation:
 ```{python}
 import numpy as np
 from pyplyr import DataFrame
@@ -22,7 +31,7 @@ df = DataFrame(
 df
 ```
 
-## Adding columns
+### Adding columns
 To make use of an existing column, you need to use a lambda function with an argument which shares that column's name. Columns can be created and used within the same call. The `_by` keyword can be used to apply operations with a _grouping_:
 
 
@@ -39,7 +48,7 @@ df1 = df.mutate(
 df1
 ```
 
-## Summarising results:
+### Summarising results:
 Values can be summarised to a single row, and grouping can also be applied:
 
 

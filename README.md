@@ -3,7 +3,16 @@
 An experimental data wrangling toolkit for Python, built on Numpy and
 inspired by dplyr.
 
-## DataFrame creation:
+\## Installation The development version of pyplyr can currently be
+installed from GitHub using pip:
+
+``` bash
+python -m pip install git+https://github.com/wurli/pyplyr
+```
+
+## Usage:
+
+### DataFrame creation:
 
 ``` python
 import numpy as np
@@ -27,7 +36,7 @@ df
     2 colombia banana         3          3
     3 spain    pear           2          5
 
-## Adding columns
+### Adding columns
 
 To make use of an existing column, you need to use a lambda function
 with an argument which shares that column’s name. Columns can be created
@@ -55,7 +64,7 @@ df1
     2 Colombia banana         3          3           9                          1.0
     3 Spain    pear           2          5          10           0.7692307692307693
 
-## Summarising results:
+### Summarising results:
 
 Values can be summarised to a single row, and grouping can also be
 applied:
