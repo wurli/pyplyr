@@ -1,5 +1,6 @@
 import numpy as np
 from ..DataFrameCols import DataFrameCols
+from .._utils import _rm_none
 
 class DataFrameBase(DataFrameCols):
     def __init__(self, **kwargs):
@@ -13,6 +14,7 @@ class DataFrameBase(DataFrameCols):
 
 
     # TODO: implement key: list
+    # TODO: implement i, j
     def __setitem__(self, key, value):
         key = self.as_colname(key)
         old_cols = self.colnames()
@@ -26,6 +28,7 @@ class DataFrameBase(DataFrameCols):
     
 
     def _check_exists(self, *args):
+        args = _rm_none(args)
         non_existant = set(args) - set(self.colnames())
         if len(non_existant) > 0:
             non_existant = ", ".join(non_existant)
@@ -33,11 +36,12 @@ class DataFrameBase(DataFrameCols):
     
 
     def _make_col(self, x):
-        _, x = np.broadcast_arrays(self[0], x)
-        return x
+        return np.broadcast_to(x, self[0].shape)
 
 
     def nrow(self):
+        if self.ncol() == 0:
+            return 0
         return len(self[0])
 
     

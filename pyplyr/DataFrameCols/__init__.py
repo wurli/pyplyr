@@ -1,5 +1,6 @@
 from .._utils import _reorder
 import copy    
+import numpy as np
 
 class DataFrameCols(dict):
     def __init__(self, **kwargs):
@@ -11,9 +12,9 @@ class DataFrameCols(dict):
             return self
 
         pos = self.as_colname(pos)
-
-        if isinstance(pos, list):
-            return DataFrameCols(**{p: self[p] for p in pos})
+        
+        if isinstance(pos, list) or isinstance(pos, np.ndarray):
+            return DataFrameCols(**{p: self[p] for p in pos if pos})
         
         return super().__getitem__(pos)
 
@@ -42,7 +43,8 @@ class DataFrameCols(dict):
             return i
         if isinstance(i, int):
             return self.colnames()[i]
-        if isinstance(i, list):
+        if isinstance(i, list) or isinstance(i, np.ndarray):
+            i = [ii for ii in i if ii is not None]
             return [self.as_colname(ii) for ii in i]
         raise KeyError(f"Cannot get index of type {type(i)}")
     
